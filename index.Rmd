@@ -1,5 +1,5 @@
 ---
-title: "Estadísticas policiales 2021"
+title: "Estadísticas policiales 2021 - Fiorella Cordero C12294 y Yeimy Navarro C05525"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -22,6 +22,7 @@ library(plotly)
 library(readxl)
 library(stats)
 library(stringi)
+library(lubridate)
 
 ```
 
@@ -268,13 +269,12 @@ Row
 
 datos_policiales <-
   datos_policiales %>%
-  mutate(mes = format(Fecha, "%B")) 
+  mutate(mes = month(Fecha)) 
 
 grafico_delitos_por_mes <-
   datos_policiales %>%
-  count(mes) %>%
-  ggplot(aes(x = reorder(mes, n), y = n)) +
-  geom_bar(stat = "identity") +
+  ggplot(aes(x = desc(mes))) +
+  geom_bar() +
   ggtitle("Delitos cometidos por mes") +
   xlab("Mes") +
   ylab("Cantidad de Delitos") +
